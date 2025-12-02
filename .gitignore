@@ -11,3 +11,6 @@ wheels/
 
 # advent of code artifacts
 input.txt
+
+# C++ exes
+*.exe
