@@ -5,22 +5,10 @@ Day 1, Advent of Code
 from pathlib import Path
 
 
-def compute_dial_position(initial_position, direction, steps, total_positions=100, ):
-    """
-    Computes the new position on a combination dial.
-    """
-    if direction == 'L':
-        # Clockwise movement increases the position
-        new_position = (initial_position + steps) % total_positions
-    elif direction == 'R':
-        # Counter-clockwise movement decreases the position
-        # The (expression + total_positions) % total_positions handles
-        # negative results from the modulo operation in a standard way
-        new_position = (initial_position - steps + total_positions) % total_positions
-    else:
-        raise ValueError("Direction must be 'L' or 'R'")
-
-    return new_position
+def compute_dial_position(position, direction, steps, total_positions=100):
+    """Computes the new position on a combination dial."""
+    delta = steps if direction == 'L' else -steps
+    return (position + delta) % total_positions
 
 
 def count_zero_crossings(start, steps, direction, total_positions=100):
