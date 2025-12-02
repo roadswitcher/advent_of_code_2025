@@ -13,17 +13,11 @@ def compute_dial_position(position, direction, steps, total_positions=100):
 
 def count_zero_crossings(start, steps, direction, total_positions=100):
     """Count how many times we click through zero."""
-    count = 0
-    for i in range(1, steps + 1):
-        if direction == 'L':
-            pos = (start + i) % total_positions
-        else:
-            pos = (start - i + total_positions) % total_positions
-
-        if pos == 0:
-            count += 1
-
-    return count
+    delta = 1 if direction == 'L' else -1
+    return sum(
+        (start + delta * i) % total_positions == 0
+        for i in range(1, steps + 1)
+    )
 
 
 def compute_password_pt1(input: str) -> int:
