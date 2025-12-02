@@ -19,43 +19,28 @@ def count_zero_crossings(start, steps, direction, total_positions=100):
         for i in range(1, steps + 1)
     )
 
+def solve_combination_lock(instructions, count_crossings=False, total_positions=100):
+    """Solve the combination lock puzzle.
 
-def compute_password_pt1(input: str) -> int:
-    """Given a set of combination instructions, compute the number of times
-    the dial lands on zero and return that as the true password.
-
-    Dial starts at 50.
+    Args:
+        instructions: List of direction+steps strings (e.g., ['L68', 'R30'])
+        count_crossings: If True, count all passes through zero.
+                        If False, only count when landing on zero.
     """
-    password = 0
     position = 50
+    password = 0
 
-    for instruction in input:
-        direction = instruction[0]
-        increment = int(instruction[1:])
-        new_position = compute_dial_position(position, direction, increment)
-        # print(instruction, direction, increment, position, new_position)
-        position = new_position
-        if position == 0:
+    for instruction in instructions:
+        direction, steps = instruction[0], int(instruction[1:])
+
+        if count_crossings:
+            password += count_zero_crossings(position, steps, direction, total_positions)
+
+        position = compute_dial_position(position, direction, steps, total_positions)
+
+        if not count_crossings and position == 0:
             password += 1
-    return password
 
-
-def compute_password_pt2(input: str) -> int:
-    """Given a set of combination instructions, compute the number of times
-    the dial lands on zero and return that as the true password.
-
-    Dial starts at 50.
-    """
-    password = 0
-    position = 50
-
-    for instruction in input:
-        direction = instruction[0]
-        increment = int(instruction[1:])
-        new_position = compute_dial_position(position, direction, increment)
-        # print(instruction, direction, increment, position, new_position)
-        password += count_zero_crossings(position, increment, direction)
-        position = new_position
     return password
 
 
@@ -67,8 +52,9 @@ def read_input(filename: Path) -> str:
 
 
 if __name__ == '__main__':
-    # pt1 = compute_password_pt1(read_input(Path('test_input.txt')))
-    # pt2 = compute_password_pt2(read_input(Path('test_input.txt')))
-    pt1 = compute_password_pt1(read_input(Path('input.txt')))
-    pt2 = compute_password_pt2(read_input(Path('input.txt')))
+    # pt1 = solve_combination_lock(read_input(Path('test_input.txt')), count_crossings=False)
+    # pt2 = solve_combination_lock(read_input(Path('test_input.txt')), count_crossings=True)
+    # print(f'Part 1: {pt1}, Part 2: {pt2}')
+    pt1 = solve_combination_lock(read_input(Path('input.txt')), count_crossings=False)
+    pt2 = solve_combination_lock(read_input(Path('input.txt')), count_crossings=True)
     print(f'Part 1: {pt1}, Part 2: {pt2}')
