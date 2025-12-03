@@ -3,4 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.14 (aoc_2025)" />
   </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14 (advent_of_code_2025)" project-jdk-type="Python SDK" />
 </project>
