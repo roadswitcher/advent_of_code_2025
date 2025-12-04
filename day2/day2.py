@@ -54,7 +54,7 @@ def sum_bad_ids_pt2(id_ranges: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    with open("input.txt") as input_file:
+    with open("test_input.txt") as input_file:
         single_line = input_file.readline().strip()
         data_list = single_line.split(",")
     print(data_list)
