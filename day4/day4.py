@@ -1,5 +1,4 @@
 """Day 4 AOC 2025"""
-from wsgiref.validate import check_input
 
 
 def read_input(filename: str) -> list:
@@ -44,6 +43,33 @@ def pt1_cell_count(grid) -> None:
     print(count)
 
 
+def pt2_how_many_rolls(grid) -> None:
+    """Number of rolls total that can be removed"""
+    count = 0
+    rows = len(grid)
+    cols = len(grid[0])
+
+    not_done = True
+
+    while not_done:
+        grid_two = []
+        prev_count = count
+        for row in range(rows):
+            new_row = ""
+            for col in range(cols):
+                if grid[row][col] == '@' and number_of_neighbors(row, col, grid, occupied_space='@') < 4:
+                    new_row += '.'  # Replace with empty
+                    count += 1
+                else:
+                    new_row += grid[row][col]
+            grid_two.append(new_row)
+
+        grid = grid_two
+
+        if count == prev_count:
+            not_done = False
+    print(count)
+
 
 if __name__ == "__main__":
     # filename = "test_input.txt"
@@ -51,3 +77,4 @@ if __name__ == "__main__":
     warehouse_grid = read_input(filename)
     # print(warehouse_grid)
     pt1_cell_count(warehouse_grid)
+    pt2_how_many_rolls(warehouse_grid)
