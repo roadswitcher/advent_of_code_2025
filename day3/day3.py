@@ -1,39 +1,46 @@
 """Day 3, AOC 2025"""
 
-import pathlib
-import sys
-
-
-def digitparse(bank: str) -> list:
-    """Parse a battery bank string into a list of digits"""
-    return [int(batt) for batt in bank]
-
 
 def idx_leftmost_max(bank: str) -> int:
     """Return the index of the maximum digit in first N-1 digits of number string of length N"""
-    bank = digitparse(bank)
+    bank = [int(batt) for batt in bank]
     max_num = max(bank)
     return bank.index(max_num)
 
 
-def bank_largest_joltage(bank:str) -> int:
-    """Given a string representing a battery bank, return the largest joltage available"""
-    first_max = idx_leftmost_max(bank[:-1])
-    second_chunk = bank[first_max + 1:]
-    second_max = idx_leftmost_max(second_chunk)
-    # print(bank, first_max, bank[first_max], second_chunk[second_max])
-    return int(bank[first_max]+second_chunk[second_max])
+def bank_largest_joltage_n(bank: str, n: int) -> int:
+    """Return the largest N-digit joltage available in bank
+    """
+    if len(bank) < n + 1:
+        raise ValueError("Bank must be at least N+1 characters")
+
+    tot = 0
+    pos = 0
+
+    for picked_so_far in range(n):
+        # how many digits we still need AFTER this pick
+        remaining_cells_needed = n - 1 - picked_so_far
+        search_end = len(bank) - remaining_cells_needed
+
+        # find leftmost max in the current window
+        rel = idx_leftmost_max(bank[pos:search_end])
+        pos += rel
+
+        tot = tot * 10 + int(bank[pos])
+        pos += 1
+
+    return tot
 
 
-def pt1_joltages(battery_banks: list) -> None:
-    """Given a list of strings representing battery banks, return the joltage available"""
+def joltages(battery_banks: list, num_cells: int) -> int:
+    """Given a list of strings representing battery banks, return the joltage available with N cells"""
     joltage = 0
     for bank in battery_banks:
-        joltage += bank_largest_joltage(bank)
-    print(joltage)
+        joltage += bank_largest_joltage_n(bank, num_cells)
+    return joltage
 
 
-def read_input(filename: Path) -> str:
+def read_input(filename: str) -> list:
     """Read input from file"""
     with open(filename) as f:
         lines = [line.strip() for line in f.readlines()]
@@ -43,5 +50,7 @@ def read_input(filename: Path) -> str:
 if __name__ == '__main__':
     # input_lines = read_input('test_input.txt')
     input_lines = read_input('input.txt')
-    print(input_lines)
-    pt1_joltages(input_lines)
+    # pt 1
+    print(joltages(input_lines, 2))
+    # pt 2
+    print(joltages(input_lines, 12))
