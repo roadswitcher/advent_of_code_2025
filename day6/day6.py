@@ -23,6 +23,7 @@ def pt2_cephalopod_total(rows):
     significant digit at the top and the least significant digit at the bottom. (Problems are still separated with a
     column consisting only of spaces, and the symbol at the bottom of the problem is still the operator to use.)
     """
+
     height = len(rows)
     total = 0
     # Transpose to match problem statement
