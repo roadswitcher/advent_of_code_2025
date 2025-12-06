@@ -20,10 +20,9 @@ def pt2_cephalopod_total(rows):
     """Cephalopod math is written right-to-left in columns. Each number is given in its own column, with the most
     significant digit at the top and the least significant digit at the bottom. (Problems are still separated with a
     column consisting only of spaces, and the symbol at the bottom of the problem is still the operator to use.)"""
-    height = len(rows)
+    
     total = 0
-    # Transpose to match problem statement
-    transposed_rows = [''.join(col) for col in zip(*rows)]
+    transposed_rows = [''.join(col) for col in zip(*rows)] # Transpose to match problem statement
 
     # Group into problems, dropping the blank lines
     problems = [list(g) for k, g in groupby(transposed_rows, key=lambda c: bool(c.strip())) if k]
