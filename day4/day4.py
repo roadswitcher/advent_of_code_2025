@@ -8,7 +8,7 @@ def read_input(filename: str) -> list:
     return lines
 
 
-def number_of_neighbors(row: int, col: int, grid: list, occupied_space='@') -> int:
+def number_of_neighbors(row: int, col: int, grid: list, occupied_space="@") -> int:
     """Return number of neighbors for a cell in grid"""
     rows = len(grid)
     cols = len(grid[0])
@@ -38,7 +38,10 @@ def pt1_cell_count(grid) -> None:
     cols = len(grid[0])
     for row in range(rows):
         for col in range(cols):
-            if grid[row][col] == '@' and number_of_neighbors(row, col, grid, occupied_space='@') < 4:
+            if (
+                grid[row][col] == "@"
+                and number_of_neighbors(row, col, grid, occupied_space="@") < 4
+            ):
                 count += 1
     print(count)
 
@@ -57,8 +60,11 @@ def pt2_how_many_rolls(grid) -> None:
         for row in range(rows):
             new_row = ""
             for col in range(cols):
-                if grid[row][col] == '@' and number_of_neighbors(row, col, grid, occupied_space='@') < 4:
-                    new_row += '.'  # Replace with empty
+                if (
+                    grid[row][col] == "@"
+                    and number_of_neighbors(row, col, grid, occupied_space="@") < 4
+                ):
+                    new_row += "."  # Replace with empty
                     count += 1
                 else:
                     new_row += grid[row][col]
