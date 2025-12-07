@@ -28,7 +28,6 @@ def pt1_count_splits(rows):
         # Find beams from previous 
         prev_row = beams_visualized[row_id - 1]
         incoming_beams = [idx for idx, char in enumerate(prev_row) if char == beam]
-        # Find splitters in current row, and let the beams 'fall thru'
         new_row = list(rows[row_id])
         for beam_idx in incoming_beams:
             if new_row[beam_idx] == splitter:
@@ -52,6 +51,7 @@ def pt2_count_distinct_paths(rows):
         curr_row = rows[row]
         splitters = [idx for idx, char in enumerate(curr_row) if char == splitter]
         for split in splitters:
+            # Beams 'fall thru' here
             tmp = intermediates[split]
             intermediates[split] = 0
             intermediates[split+1] += tmp
