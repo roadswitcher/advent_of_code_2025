@@ -19,7 +19,7 @@ def pt1_biggest_area(coords):
 
 if __name__ == '__main__':
     filename = "test_input.txt"
-    filename = "input.txt"
+    # filename = "input.txt"
 
     list_of_coords = []
     with open(filename) as csvfile:
