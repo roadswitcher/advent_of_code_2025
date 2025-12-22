@@ -1,6 +1,7 @@
 """Day 9 AOC 2025"""
 import csv
 from itertools import combinations
+from tqdm import tqdm
 
 def area_of_rect(corner_1, corner_2):
     """Given two corners, return the INCLUSIVE area of the rectangle"""
@@ -13,6 +14,23 @@ def yield_rect_coords(p1, p2):
     for x in range(x_min, x_max + 1):
         for y in range(y_min, y_max + 1):
             yield [x, y]
+
+def yield_rect_edges(p1, p2):
+    """Yields the integer coordinates on the perimeter of the rectangle."""
+    x_min, x_max = sorted([p1[0], p2[0]])
+    y_min, y_max = sorted([p1[1], p2[1]])
+
+    # Top and Bottom edges
+    for x in range(x_min, x_max + 1):
+        yield [x, y_min]
+        if y_max != y_min:  # Avoid double-yielding if height is 1
+            yield [x, y_max]
+
+    # Left and Right edges (excluding corners already yielded)
+    for y in range(y_min + 1, y_max):
+        yield [x_min, y]
+        if x_max != x_min:  # Avoid double-yielding if width is 1
+            yield [x_max, y]
 
 def is_on_edge(point, p1, p2):
     """Checks if a point lies exactly on the segment p1-p2"""
@@ -52,7 +70,7 @@ def point_in_polygon(point, coords):
 
 def is_rect_in_polygon(corner1, corner2, coords):
     """Returns True if every point in the rectangle is inside/on the polygon"""
-    for pt in yield_rect_coords(corner1, corner2):
+    for pt in yield_rect_edges(corner1, corner2):
         if not point_in_polygon(pt, coords):
             return False
     return True
@@ -64,7 +82,7 @@ def pt1_biggest_area(coords):
 def pt2_biggest_area(coords):
     """Area of the biggest rectangle formed by two corners that is fully contained"""
     max_area = 0
-    for corner1, corner2 in combinations(coords, 2):
+    for corner1, corner2 in tqdm(combinations(coords, 2)):
         # Don't run the expensive raycast if the area is already smaller
         current_area = area_of_rect(corner1, corner2)
         if current_area > max_area:
