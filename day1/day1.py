@@ -47,7 +47,7 @@ def solve_combination_lock(instructions, count_crossings=False, total_positions=
 def read_input(filename: Path) -> str:
     """Given a set of combination instructions, read the input file"""
     with open(filename) as f:
-        lines = [line.strip() for line in f.readlines()]
+        lines = [line.strip() for line in f.readlines() ]
     return lines
 
 
