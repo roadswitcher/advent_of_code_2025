@@ -11,10 +11,10 @@ def read_data(filename):
 def distance_between_boxes(box1, box2):
     return math.dist(box1, box2)
 
-def closest_boxes(boxes):
-    closest_pairs = []
-    for i, box in enumerate(boxes):
-        
+# def closest_boxes(boxes):
+#     closest_pairs = []
+#     for i, box in enumerate(boxes):
+#
 
 
 if __name__=="__main__":
